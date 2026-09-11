@@ -1,5 +1,19 @@
 const flavourSections = document.querySelectorAll(".flavour-section");
 const toast = document.querySelector(".toast");
+const carouselImages = document.querySelectorAll(".carousel-image");
+
+let carouselIndex = 0;
+let carouselTimer;
+
+const showNextMacaron = () => {
+  carouselImages[carouselIndex].classList.remove("is-active");
+  carouselIndex = (carouselIndex + 1) % carouselImages.length;
+  carouselImages[carouselIndex].classList.add("is-active");
+};
+
+if (carouselImages.length > 1) {
+  carouselTimer = window.setInterval(showNextMacaron, 5200);
+}
 
 let toastTimer;
 flavourSections.forEach((section) => {
@@ -11,4 +25,8 @@ flavourSections.forEach((section) => {
     clearTimeout(toastTimer);
     toastTimer = setTimeout(() => toast.classList.remove("show"), 2400);
   });
+});
+
+window.addEventListener("pagehide", () => {
+  window.clearInterval(carouselTimer);
 });
